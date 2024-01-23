@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+name='pardus-power-manager'
+release='1'
+version='master'
+url='https://pardus.org.tr'
+description='pardus-power-manager'
+email='aliriza.keskin@pardus.org.tr'
+maintainer='aliriza'
+license=('GPLv3')
+source=('https://github.com/pardus/pardus-power-manager.git')
+depends=(python gtk3)
+makedepends=()
+md5sums=('SKIP')
+group=()
+uses=()
+arch=('x86_64')
+
+cd pardus-power-manager.git
+
+setup () {
+    meson setup build --prefix=/usr \
+        --libdir=/usr/lib64/ \
+        -Dservice=openrc
+}
+
+build () {
+    ninja -C build $jobs
+}
+
+package () {
+    ninja -C build install $jobs
+}
